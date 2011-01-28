@@ -1,6 +1,6 @@
 Name:			wiiuse
 Version:		0.12
-Release:		%mkrel 1
+Release:		%mkrel 1.1
 
 %define	major		0
 %define	libname		%mklibname %{name} %major
@@ -12,7 +12,7 @@ License:	GPLv3+
 Group:		System/Libraries
 URL:		http://sourceforge.net/projects/wiiuse
 Source0:	http://sourceforge.net/projects/wiiuse/files/wiiuse/v0.12/wiiuse_v0.12_src.tar.gz
-
+Patch0:		wiiuse.memset.patch
 BuildRequires:	bluez-devel
 # for the example
 BuildRequires:	mesagl-devel
@@ -49,6 +49,7 @@ Dynamic libraries from %{name}.
 
 %prep
 %setup -q -n %{name}_v%{version}
+%patch0 -p0
 perl -pi -e "s|\r\n|\n|g" CHANGELOG README
 
 %build
@@ -75,5 +76,3 @@ rm -rf %{buildroot}
 %files -n %{libname}
 %defattr(0644,root,root,0755)
 %{_libdir}/*.so
-
-
