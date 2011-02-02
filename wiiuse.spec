@@ -1,6 +1,6 @@
 Name:			wiiuse
 Version:		0.12
-Release:		%mkrel 1.1
+Release:		%mkrel 2
 
 %define	major		0
 %define	libname		%mklibname %{name} %major
@@ -33,6 +33,7 @@ Single threaded and nonblocking makes a light weight and clean API.
 Summary:	Header files from %{name}
 Group:		Development/C
 Requires:	libwiiuse = %{version}
+Requires:	bluez-devel
 Provides:	%{name}-devel = %{version}-%{release}
 
 %description -n %{develname}
