@@ -1,6 +1,6 @@
 Name:		wiiuse
 Version:		0.12
-Release:		3
+Release:		4
 
 %define	major		0
 %define	libname		%mklibname %{name} %{major}
