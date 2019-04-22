@@ -1,26 +1,24 @@
 Name:		wiiuse
-Version:		0.12
-Release:		4
+Version:		0.15.4
+Release:		1
 
 %define	major		0
 %define	libname		%mklibname %{name} %{major}
 %define develname	%mklibname %{name} -d
 
 Summary:	Library to access wiimotes and its various accessories
-#LGPLv3+?
 License:	GPLv3+
 Group:		System/Libraries
-URL:		http://sourceforge.net/projects/wiiuse
-Source0:	http://sourceforge.net/projects/wiiuse/files/wiiuse/v0.12/wiiuse_v0.12_src.tar.gz
-Patch0:		wiiuse.memset.patch
-Patch1:		wiiuse_cflags.patch
-Patch2:		wiiuse_fix_linking.patch
+URL:		https://github.com/wiiuse/wiiuse
+Source0:        https://github.com/wiiuse/wiiuse/archive/v%{version}/%{name}-%{version}.tar.gz
+BuildRequires:  cmake
+BuildRequires:  dos2unix
 BuildRequires:	pkgconfig(bluez)
 # for the example
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(glut)
-BuildRequires:	pkgconfig(sdl)
+BuildRequires:	pkgconfig(sdl2)
 
 
 %description
@@ -50,55 +48,30 @@ Dynamic libraries from %{name}.
 
 
 %prep
-%setup -q -n %{name}_v%{version}
-%patch0 -p0
-%patch1 -p1 
-%patch2 -p1 
+%autosetup -p1
 
-
-perl -pi -e "s|\r\n|\n|g" CHANGELOG README
+dos2unix CHANGELOG.mkd README.mkd
 
 %build
-CFLAGS='%optflags' make
+%cmake \
+  -DBUILD_EXAMPLE=NO \
+  -DBUILD_EXAMPLE_SDL=NO \
+  -DINSTALL_EXAMPLES=NO
+%make_build
 
 %install
-install -D -m 644 src/release*/libwiiuse.so %{buildroot}%{_libdir}/libwiiuse.so
-install -D -m 644 src/wiiuse.h %{buildroot}%{_includedir}/wiiuse.h
-install -D -m 755 example/release*/wiiuse-example %{buildroot}%{_bindir}/wiiuse-example
-install -D -m 755 example-sdl/release*/wiiuse-sdl %{buildroot}%{_bindir}/wiiuse-example-sdl
+%make_install -C build
+mv %{buildroot}%{_libdir}/libwiiuse.so{,.0}
+ln -s libwiiuse.so.0 %{buildroot}%{_libdir}/libwiiuse.so
 
-%files
-%doc CHANGELOG README
-%attr(0755,root,root) %{_bindir}/*
-
-%files -n %{develname}
-%{_includedir}/*
-%{_libdir}/libwiiuse.so
+# Handle in %%files
+rm -rf %{buildroot}%{_docdir}
 
 %files -n %{libname}
-%{_libdir}/libwiiuse.so.%{major}*
+%doc CHANGELOG.mkd README.mkd
+%license LICENSE
+%{_libdir}/lib%{name}.so.%{major}
 
-%ifarch ix86
-%exclude %{_libdir}/debug
-%endif
-
-%changelog
-* Mon Feb 28 2011 Funda Wang <fwang@mandriva.org> 0.12-3mdv2011.0
-+ Revision: 640874
-- rebuild
-
-* Wed Feb 02 2011 Funda Wang <fwang@mandriva.org> 0.12-2
-+ Revision: 635055
-- requires bluez-devel for headers
-
-* Fri Jan 28 2011 Zombie Ryushu <ryushu@mandriva.org> 0.12-1.1
-+ Revision: 633643
-- Fix memset bug in wiiuse
-
-* Wed Oct 14 2009 Guillaume Bedot <littletux@mandriva.org> 0.12-1mdv2010.0
-+ Revision: 457314
-- import wiiuse
-
-
-* Mon Sep 21 2009 Guillaume Bedot <littletux@mandriva.org> 0.12-1mdv2010.0
-- First package of wiiuse for Mandriva
+%files -n %{develname}
+%{_includedir}/%{name}.h
+%{_libdir}/lib%{name}.so
