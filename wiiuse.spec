@@ -72,6 +72,6 @@ rm -rf %{buildroot}%{_docdir}
 %license LICENSE
 %{_libdir}/lib%{name}.so.%{major}
 
-%files -n %{devname}
+%files -n %{develname}
 %{_includedir}/%{name}.h
 %{_libdir}/lib%{name}.so
