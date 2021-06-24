@@ -1,0 +1,12 @@
+Index: wiiuse-0.15.4/src/CMakeLists.txt
+===================================================================
+--- wiiuse-0.15.4/src/CMakeLists.txt
++++ wiiuse-0.15.4/src/CMakeLists.txt	2019-06-14 13:56:17.175430044 +0200
+@@ -57,6 +57,7 @@
+ add_definitions(-DWIIUSE_COMPILE_LIB)
+ 
+ add_library(wiiuse ${WIIUSE_LIB_TYPE} ${SOURCES} ${API})
++set_target_properties(wiiuse PROPERTIES VERSION ${CPACK_PACKAGE_VERSION} SOVERSION 0)
+ 
+ if(WIN32)
+ 	target_link_libraries(wiiuse ws2_32 setupapi ${WINHID_LIBRARIES})
