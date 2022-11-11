@@ -5,12 +5,12 @@
 Summary:	Library to access wiimotes and its various accessories
 Name:		wiiuse
 Version:	0.15.5
-Release:	1
+Release:	2
 License:	GPLv3+
 Group:		System/Libraries
 URL:		https://github.com/wiiuse/wiiuse
 Source0:	https://github.com/wiiuse/wiiuse/archive/v%{version}/%{name}-%{version}.tar.gz
-Patch0:		wiiuse-0.15.4-mga-soversion.patch
+Patch0:		wiiuse-soname.patch
 BuildRequires:	cmake
 BuildRequires:	dos2unix
 BuildRequires:	pkgconfig(bluez)
@@ -40,7 +40,7 @@ Summary:	Header files from %{name}
 Group:		Development/C
 Requires:	libwiiuse = %{version}
 Requires:	bluez-devel
-Provides:	%{name}-devel = %{version}-%{release}
+Provides:	%{name}-devel = %{EVRD}
 
 %description -n %{develname}
 Includes files for developing programs based on %{name}.
