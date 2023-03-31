@@ -5,7 +5,7 @@
 Summary:	Library to access wiimotes and its various accessories
 Name:		wiiuse
 Version:	0.15.5
-Release:	2
+Release:	3
 License:	GPLv3+
 Group:		System/Libraries
 URL:		https://github.com/wiiuse/wiiuse
