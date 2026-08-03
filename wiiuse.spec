@@ -12,6 +12,7 @@ URL:		https://github.com/wiiuse/wiiuse
 Source0:	https://github.com/wiiuse/wiiuse/archive/v%{version}/%{name}-%{version}.tar.gz
 Patch0:		wiiuse-soname.patch
 BuildRequires:	cmake
+BuildRequires:  make
 BuildRequires:	dos2unix
 BuildRequires:	pkgconfig(bluez)
 # for the example
